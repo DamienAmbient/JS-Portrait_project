@@ -1071,6 +1071,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var sliders = function sliders(slides, dir, prev, next) {
   var slideIndex = 1;
+  var paused = false;
   var items = document.querySelectorAll(slides);
 
   function showSlides(n) {
@@ -1110,18 +1111,28 @@ var sliders = function sliders(slides, dir, prev, next) {
     });
   } catch (e) {}
 
-  if (dir === "vertical") {
-    setInterval(function () {
-      plusSlides(1);
-      items[slideIndex - 1].classList.add("slideInDown");
-    }, 3000);
-  } else {
-    setInterval(function () {
-      plusSlides(1);
-      items[slideIndex - 1].classList.remove("slideInRight");
-      items[slideIndex - 1].classList.add("slideInLeft");
-    }, 3000);
+  function activateAnimation() {
+    if (dir === "vertical") {
+      paused = setInterval(function () {
+        plusSlides(1);
+        items[slideIndex - 1].classList.add("slideInDown");
+      }, 3000);
+    } else {
+      paused = setInterval(function () {
+        plusSlides(1);
+        items[slideIndex - 1].classList.remove("slideInRight");
+        items[slideIndex - 1].classList.add("slideInLeft");
+      }, 3000);
+    }
   }
+
+  activateAnimation();
+  items[0].parentNode.addEventListener("mouseenter", function () {
+    clearInterval(paused);
+  });
+  items[0].parentNode.addEventListener("mouseleave", function () {
+    activateAnimation();
+  });
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (sliders);
