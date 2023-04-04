@@ -938,7 +938,8 @@ window.addEventListener("DOMContentLoaded", function () {
   "use strict";
 
   Object(_modules_modals__WEBPACK_IMPORTED_MODULE_0__["default"])();
-  Object(_modules_slider__WEBPACK_IMPORTED_MODULE_1__["default"])(".feedback-slider-item", "", ".main-prev-btn", ".main-next-btn");
+  Object(_modules_slider__WEBPACK_IMPORTED_MODULE_1__["default"])(".feedback-slider-item", "horizontal", ".main-prev-btn", ".main-next-btn");
+  Object(_modules_slider__WEBPACK_IMPORTED_MODULE_1__["default"])(".main-slider-item", "vertical");
 });
 
 /***/ }),
@@ -1108,6 +1109,19 @@ var sliders = function sliders(slides, dir, prev, next) {
       items[slideIndex - 1].classList.add("slideInLeft");
     });
   } catch (e) {}
+
+  if (dir === "vertical") {
+    setInterval(function () {
+      plusSlides(1);
+      items[slideIndex - 1].classList.add("slideInDown");
+    }, 3000);
+  } else {
+    setInterval(function () {
+      plusSlides(1);
+      items[slideIndex - 1].classList.remove("slideInRight");
+      items[slideIndex - 1].classList.add("slideInLeft");
+    }, 3000);
+  }
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (sliders);
